@@ -16,6 +16,7 @@ speakers = {
         "greetings":["привет","приветик","ку","хай"],
         "launch_google_chrome":["запусти google chrome","включи google chrome"],
         "launch_youtube":["запуск youtube", "запусти youtube","youtube","включи youtube"],
+        "google_query":["найди информацию", "хочу найти информацию", "google"],
         "write_to_notes":['запиши заметку', 'сделай заметку','хочу запомнить фразу','напиши заметку'],
     }
 
@@ -102,7 +103,17 @@ def launch_youtube():
     else:
         file_not_found()
 
-
+def google_query():
+    print("ggggggggg")
+    qwery = command_pronunciations()
+    webbrowser.register('Google-chrome', None,
+                        webbrowser.BackgroundBrowser(r"C:\Program Files\Google\Chrome\Application\chrome.exe"))
+    speaker = Path(f"speakers/{input_speaker}/{input_speaker}_launch_google_chrome.ogg")
+    if speaker.exists():
+        webbrowser.get("Google-chrome").open(f"https://www.google.com/search?q=%D1%8F{qwery}")
+        time.sleep(3)
+    else:
+        file_not_found()
 
 def greetings():
     speaker = Path(f"speakers/{input_speaker}/{input_speaker}_greetings.ogg")
@@ -119,6 +130,7 @@ def main():
     for k,v in speakers["commands"].items():
         if qwery in v:
             globals()[k]()
+        print("Ничего нету")
 
 if __name__ == '__main__':
     speaker_check(input_speaker)
