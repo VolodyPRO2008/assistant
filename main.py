@@ -2,11 +2,10 @@ import speech_recognition as sr
 from gtts import gTTS
 import subprocess
 from pathlib import Path
-import os
+import sys
 import time
 import webbrowser
-# from pydub import AudioSegment
-# from pydub.playback import play
+
 
 
 
@@ -18,6 +17,7 @@ speakers = {
         "launch_youtube":["запуск youtube", "запусти youtube","youtube","включи youtube"],
         "google_query":["найди информацию", "хочу найти информацию", "google"],
         "write_to_notes":['запиши заметку', 'сделай заметку','хочу запомнить фразу','напиши заметку'],
+        "set_timer":["установи таймер","засеки время", "засечь время"],
     }
 
            }
@@ -93,6 +93,20 @@ def write_to_notes():
 
 
 
+def set_timer():
+    qwery = command_pronunciations()
+
+    hour = "час"
+    minutes = "минут"
+    second = "секунд"
+    for i in minutes:
+        if qwery.find(i):
+            print("fsdf")
+
+
+
+
+
 def launch_youtube():
     webbrowser.register('Google-chrome',None,webbrowser.BackgroundBrowser(r"C:\Program Files\Google\Chrome\Application\chrome.exe"))
     speaker = Path(f"speakers/{input_speaker}/{input_speaker}_launch_google_chrome.ogg")
@@ -104,7 +118,6 @@ def launch_youtube():
         file_not_found()
 
 def google_query():
-    print("ggggggggg")
     qwery = command_pronunciations()
     webbrowser.register('Google-chrome', None,
                         webbrowser.BackgroundBrowser(r"C:\Program Files\Google\Chrome\Application\chrome.exe"))
@@ -135,5 +148,6 @@ def main():
 if __name__ == '__main__':
     speaker_check(input_speaker)
     main()
+
 
 
