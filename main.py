@@ -17,7 +17,7 @@ speakers = {
         "launch_youtube":["запуск youtube", "запусти youtube","youtube","включи youtube"],
         "google_query":["найди информацию", "хочу найти информацию", "google"],
         "write_to_notes":['запиши заметку', 'сделай заметку','хочу запомнить фразу','напиши заметку'],
-        "set_timer":["установи таймер","засеки время", "засечь время"],
+        "set_timer":["установи таймер","засеки время", "засечь время","засеки таймер","таймер"],
     }
 
            }
@@ -95,17 +95,33 @@ def write_to_notes():
 
 def set_timer():
     qwery = command_pronunciations()
+    list_ = []
+    try:
+        qwery = qwery.split(" ")
 
-    hour = "час"
-    minutes = "минут"
-    second = "секунд"
-    for i in minutes:
-        if qwery.find(i):
-            print("fsdf")
-
-
-
-
+        hour = "часа"
+        minutes = "минут"
+        second = "секунд"
+        h = 0
+        for i in qwery:
+            if i.isdigit():
+                j = int(i)
+                print(qwery[h+1])
+                if qwery[h+1] in hour:
+                    j *= 180
+                    list_.append(j)
+                    h += 2
+                elif qwery[h+1] in minutes:
+                    j *= 60
+                    list_.append(j)
+                    h += 2
+                elif qwery[h+1] in second:
+                    list_.append(j)
+                    print(sum(list_))
+                else:
+                    print("пожалуйста повторите ввод таймера заново по примеру: \n N часов N минут N секунд")
+    except TypeError:
+        print("Ошибка типа данных, пожалуйста повторите ввод таймера заново по примеру: \n N часов N минут N секунд")
 
 def launch_youtube():
     webbrowser.register('Google-chrome',None,webbrowser.BackgroundBrowser(r"C:\Program Files\Google\Chrome\Application\chrome.exe"))
