@@ -21,7 +21,9 @@ speakers = {
     }
 
            }
-
+hour = "часа"
+minutes = "минут"
+second = "секунд"
 print(speakers["name"])
 input_speaker = input("введите спикера:").lower()
 
@@ -48,65 +50,53 @@ def file_not_found():
     if speaker.exists():
         subprocess.run(["start", "", speaker.absolute()], shell=True)
         print("этот файл не найден")
+        exit()
     else:
         print("этот файл не найден")
+        exit()
 
-
+def speak_speaker(actions: str):
+    speaker = Path(f"speakers/{input_speaker}/{input_speaker}_{actions}.ogg")
+    if speaker.exists():
+        subprocess.run(["start", "", speaker.absolute()], shell=True)
+    else:
+        file_not_found()
 
 def speaker_check(name_speaker):
 
     if input_speaker in speakers['name']:
-        speaker = Path(f"speakers/{input_speaker}/{input_speaker}_hello.ogg")
-        if speaker.exists():
-            print(f"Ваш спикер {input_speaker} найден")
-            subprocess.run(["start", "", speaker.absolute()], shell=True)
-            time.sleep(4)
-
-    else:
-        print("Файл не найден")
-        exit()
-
+        speak_speaker("hello")
+        print(f"Ваш спикер {input_speaker} найден")
+        time.sleep(4)
 
 
 
 def launch_google_chrome():
     a = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
-    speaker = Path(f"speakers/{input_speaker}/{input_speaker}_launch_google_chrome.ogg")
-    if speaker.exists():
-        subprocess.run(["start", "", speaker.absolute()], shell=True)
-        time.sleep(3)
-        subprocess.Popen([a])
-    else:
-        file_not_found()
+    speak_speaker("launch_google_chrome")
+    subprocess.Popen([a])
 
 
 def write_to_notes():
+    speak_speaker("write_to_notes")
     qwery = command_pronunciations()
-    speaker = Path(f"speakers/{input_speaker}/{input_speaker}_launch_google_chrome.ogg")
-    if speaker.exists():
-        with open(r"notes/write_to_notes","a",encoding="utf-8") as file:
-            file.write(f"🔳{qwery}\n")
-            print(f"Ваша заметка записана")
-            time.sleep(3)
-    else:
-        file_not_found()
+    with open(r"notes/write_to_notes", "a", encoding="utf-8") as file:
+        file.write(f"🔳{qwery}\n")
+        print(f"Ваша заметка записана")
+        time.sleep(3)
 
 
 
 def set_timer():
+    speak_speaker("set_timer")
     qwery = command_pronunciations()
     list_ = []
     try:
         qwery = qwery.split(" ")
-
-        hour = "часа"
-        minutes = "минут"
-        second = "секунд"
         h = 0
         for i in qwery:
             if i.isdigit():
                 j = int(i)
-                print(qwery[h+1])
                 if qwery[h+1] in hour:
                     j *= 180
                     list_.append(j)
@@ -117,7 +107,9 @@ def set_timer():
                     h += 2
                 elif qwery[h+1] in second:
                     list_.append(j)
-                    print(sum(list_))
+                    time_timer = sum(list_)
+                    speak_speaker("set_timer")
+                    time.sleep(time_timer)
                 else:
                     print("пожалуйста повторите ввод таймера заново по примеру: \n N часов N минут N секунд")
     except TypeError:
@@ -125,32 +117,22 @@ def set_timer():
 
 def launch_youtube():
     webbrowser.register('Google-chrome',None,webbrowser.BackgroundBrowser(r"C:\Program Files\Google\Chrome\Application\chrome.exe"))
-    speaker = Path(f"speakers/{input_speaker}/{input_speaker}_launch_google_chrome.ogg")
-    if speaker.exists():
-        webbrowser.get("Google-chrome").open("youtube.com/")
-        time.sleep(3)
+    speak_speaker("launch_youtube")
+    webbrowser.get("Google-chrome").open("youtube.com/")
+    time.sleep(3)
 
-    else:
-        file_not_found()
+
 
 def google_query():
+    speak_speaker("google_query")
     qwery = command_pronunciations()
     webbrowser.register('Google-chrome', None,
                         webbrowser.BackgroundBrowser(r"C:\Program Files\Google\Chrome\Application\chrome.exe"))
-    speaker = Path(f"speakers/{input_speaker}/{input_speaker}_launch_google_chrome.ogg")
-    if speaker.exists():
-        webbrowser.get("Google-chrome").open(f"https://www.google.com/search?q=%D1%8F{qwery}")
-        time.sleep(3)
-    else:
-        file_not_found()
+    webbrowser.get("Google-chrome").open(f"https://www.google.com/search?q=%D1%8F{qwery}")
+    time.sleep(3)
 
 def greetings():
-    speaker = Path(f"speakers/{input_speaker}/{input_speaker}_greetings.ogg")
-
-    if speaker.exists():
-        subprocess.run(["start", "", speaker.absolute()], shell=True)
-    else:
-        file_not_found()
+    speak_speaker("greetings")
 
 
 
